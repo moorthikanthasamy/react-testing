@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -8,9 +9,11 @@ import Home from "./Home";
 import Login from "./Login";
 import NavBar from "./NavBar";
 import Page_404 from "./Page_404";
+import initReq from "../store/action";
 
-const App = () => {
+const App = props => {
 
+    props.dispatch(initReq())
     return <React.Fragment>
         <NavBar></NavBar>
         <div className="container-fluid">
@@ -21,7 +24,11 @@ const App = () => {
                 <Route path='/auth/:name' component={Login} />
                 <Route component={Page_404} />
             </Switch>
+            {props.appName}
         </div>
     </React.Fragment>
 }
-export default App;
+const mapStateToProps = state => {
+    return state;
+}
+export default connect(mapStateToProps)(App);
